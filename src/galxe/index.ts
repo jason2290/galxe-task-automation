@@ -233,7 +233,9 @@ export class Galxe {
     const res = await this.request('CampaignDetailAll', GalxeQuery.campaignsInfo, body, 'campaigns detail')
     this.spaceId = res.data.data.campaign.space.id
 
-    return res.data.data.campaign.childrenCampaigns
+    // 更動為簡易銀河任務
+    // return res.data.data.campaign.childrenCampaigns
+    return [res.data.data.campaign]
   }
 
   async submitTask(task: ITask) {
@@ -433,8 +435,10 @@ export class Galxe {
     const userInfo = await this.getUserInfo()
     this.userId = userInfo.id
 
-    if (!userInfo.email) await this.bindEmail()
-    else logger.warn(`User has already bound an email address, skip the email binding step.`)
+    // 跳過email驗證
+    // if (!userInfo.email) await this.bindEmail()
+    // else 
+    logger.warn(`User has already bound an email address, skip the email binding step.`)
 
     const needTwitter = Number(process.env.NEED_TWITTER) === 1
     if (needTwitter) {
